@@ -1,0 +1,35 @@
+services:
+  desk:
+    build: .
+    environment:
+      QAYD_ORIGIN: "https://${QAYD_DOMAIN:?Set QAYD_DOMAIN in .env}"
+      QAYD_TRUST_PROXY: "1"
+    volumes:
+      - ledger:/data
+    expose:
+      - "3100"
+    networks: [ledger-link]
+    restart: unless-stopped
+  https:
+    image: caddy:2-alpine
+    depends_on:
+      - desk
+    environment:
+      QAYD_DOMAIN: "${QAYD_DOMAIN:?Set QAYD_DOMAIN in .env}"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./shared/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks: [edge, ledger-link]
+    restart: unless-stopped
+networks:
+  edge: {}
+  ledger-link:
+    internal: true
+volumes:
+  ledger:
+  caddy_data:
+  caddy_config:

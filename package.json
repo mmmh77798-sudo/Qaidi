@@ -1,0 +1,17 @@
+{
+  "name": "qayd-ledger",
+  "version": "3.7.0",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/*.test.cjs",
+    "test:interface": "node tests/interface.cjs && node tests/advanced.cjs && node tests/drive.cjs && node tests/migration.cjs && node tests/flags.cjs && node tests/pdf.cjs && node tests/account-addons.cjs && node tests/movement-notice.cjs && node tests/collections.cjs && node tests/receipts.cjs && node tests/category-backup.cjs && node tests/team-setup.cjs && node tests/backup-review.cjs && node tests/simple-ui.cjs",
+    "shared:demo": "node shared/server.cjs demo",
+    "test:shared": "node --test tests/shared-api.cjs && node tests/shared-browser.cjs && node tests/shared-operations.cjs",
+    "test:premium": "node --test tests/premium-api.cjs && node tests/premium-browser.cjs",
+    "test:team-native": "node tests/team-in-app.cjs",
+    "test:desk-native": "node tests/shared-desk-in-app.cjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.0"
+  }
+}
